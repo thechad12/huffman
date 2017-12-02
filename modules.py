@@ -61,7 +61,7 @@ class HeapPriorityQueue(PriorityQueue):
 		return self._right(j) < len(self._data)
 
 	def _swap(self, i, j):
-		return self._data[i], self._data[j] = self._data[j], self._data[i]
+		return self._data[i], self._data[j] == self._data[j], self._data[i]
 
 	def _upheap(self, j):
 		parent = self._parent(j)

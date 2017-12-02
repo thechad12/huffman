@@ -1,6 +1,5 @@
 import os
 from modules import Node, HeapPriorityQueue, LinkedBinaryTree
-import queue
 from collections import Counter
 
 def read_file(f):
@@ -31,6 +30,10 @@ def traverse_tree(f):
 		return None
 	else:
 		children = t.children()
+		return children
+
+
+
 
 
 
