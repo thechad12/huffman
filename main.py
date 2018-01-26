@@ -1,6 +1,10 @@
 import os
-from modules import Node, HeapPriorityQueue, LinkedBinaryTree
+from modules import Node
 from collections import Counter
+from itertools import groupby
+from heapq import *
+
+codes = {}
 
 def read_file(f):
 	binary = []
@@ -10,27 +14,29 @@ def read_file(f):
 			binary.append(byte)
 	return binary
 
-def count_freq(f):
-	s = read_file(f)
-	count = collections.Counter(s)
-	return count
+def count(binary):
+	itemqueue = [Node(a, len(list(b))) for a, b in groupby(sorted(binary))]
+	heapify(itemqueue)
+	while len(itemqueue) > 1:
+		l = heappop(itemqueue)
+		r = heappop(itemqueue)
+		n = Node(None, r.weight+l.weight)
+		n.set_child(l, r)
+		heappush(itemqueue, n)
 
-def build_tree(f):
-	c = count_freq(f)
-	tree = LinkedBinaryTree()
-	tree._add_root(c[0])
-	for j in c[1:]:
-		left = tree.left(j)
-	return tree
-
-def traverse_tree(f):
-	t = build_tree(f)
-	root = t.root()
-	if t.is_empty():
-		return None
+def set_codes(s, node):
+	if node.item:
+		if not s:
+			codes[node.item] = "0"
+		else:
+			codes[node.item] = s
 	else:
-		children = t.children()
-		return children
+		set_codes(s+"0", node.left)
+		set_codes(s+"1", node.right)
+	return codes
+
+
+
 
 
 
